@@ -1,70 +1,43 @@
 var express = require('express');
 var app = express();
-var router = express.Router();
+// var app = require express execute
+var routes = require('./routes/index');
+var pizza = require('./routes/pizza');
 
-router.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
 
-router.use(function (req, res, next) {
-  // logging at the top
+app.use(function(req, res, next){
   console.log('Request at ' + new Date().toISOString());
   next();
-});
-router.use(express.static('public'));
-router.get('/', function (req, res) {
-  res.send('Hello World!');
-});
-router.get('/pizza/:topping/:qty', function (req, res) {
-  var obj = req.params;
-  obj.title = 'Pizza Shop';
+})
+//handles a console log for requests at any url
 
-  res.render('templates/pizza', obj);
-});
-router.get(/hello/, function (req, res) {
-  res.send('Hello!');
-});
-router.get('/awesomethings', function (req, res) {
-  setTimeout(function () {
-    var awesomeThings = [
-      'Pizza',
-      'Bacon',
-      '2nd Ammendment',
-      'Pluto',
-      'Space Jam'
-    ];
+app.use(express.static('public'))
+//called a middleware
+//essentially creates a route for everything in the public folder
 
-    res.render('templates/world',
-      { title: 'Awesomesite.com',
-        welcome: 'Thanks for coming!',
-        awesomeThings: awesomeThings
-      }
-    );
-  }, 5000);
-});
-router.get('/test', function (req, res, next) {
-  res.write('Test1!');
-  next();
-});
-router.get('/test', function (req, res) {
-  res.end('Test2!');
-});
-router.get('/json', function (req, res) {
-  res.send({an: 'object'});
-});
-router.get('/thisshoulderror', function (req, res) {
-  res.send(badVariable);
-});
-router.use(function (req, res) {
+app.use('/', routes);
+app.use('/pizza', pizza);
+
+
+app.use(function(req, res, next){
   res.status(403).send('Unauthorized!');
 });
-router.use(function (err, req, res, next) {
-  // pass 4 arguments to create an error handling middleware
-  console.log('ERRRRRRRRRR', err.stack);
-  res.status(500).send('My Bad');
-});
+//this handles routes that dont exits
+//so if you try to go to a route that doesnt exist is changes the response status code to 403 and sends "Unauthorized" as the res text
+//it has to be at the bottom of the page otherwise it over-writes all routes with this response
+//put 400 error handling before 500 error handling
 
-var server =router.listen(3000, function () {
+app.use(function(err, req, res, next){
+  //pass 4 arguments to create an error handling middleware
+  console.log("error", err.stack);
+  res.status(500).send('500: Error!')
+})
+
+
+var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%d', host, port);
+  console.log('Example app listening at http://%s:%s', host, port);
 });
