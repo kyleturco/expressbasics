@@ -3,11 +3,16 @@ var app = express();
 // var app = require express execute
 var routes = require('./routes/index');
 var pizza = require('./routes/pizza');
+var lessCSS = require('less-middleware')
 
 
 
 app.set('view engine', 'ejs');
 app.set('case sensitive routing', true);
+
+app.locals.title = 'AwesomeTown';
+
+app.use(lessCSS('public'));
 
 app.use(function(req, res, next){
   console.log('Request at ' + new Date().toISOString());

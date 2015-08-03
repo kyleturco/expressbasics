@@ -20,7 +20,11 @@ router.get('/awesometown', function (req, res) {
       'Pluto',
       'Space Jam'
     ];
-      res.render('templates/world', {title: 'Welcome to AwesomeTown', welcome: "Ready to get awesome?", awesomeThings: awesomeThings});
+      res.render('templates/world',
+        { title: 'Welcome to AwesomeTown',
+          welcome: "Ready to get awesome?",
+          awesomeThings: awesomeThings}
+          );
     //res.render looks in the views folder by default
     //the second argument in the render function allows you to pass arguments into the HTML
     console.log('I waited!')
