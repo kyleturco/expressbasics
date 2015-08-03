@@ -1,0 +1,22 @@
+{
+  "name": "expressbasics",
+  "version": "1.0.0",
+  "description": "NSS class project",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kyleturco/expressbasics.git"
+  },
+  "author": "Kyle Turco <kyleturco@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kyleturco/expressbasics/issues"
+  },
+  "homepage": "https://github.com/kyleturco/expressbasics#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
