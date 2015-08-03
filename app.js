@@ -4,6 +4,7 @@ var app = express();
 app.set('view engine', 'ejs');
 
 app.use(function (req, res, next) {
+  // logging at the top
   console.log('Request at ' + new Date().toISOString());
   next();
 });
@@ -11,7 +12,7 @@ app.use(function (req, res, next) {
 app.use(express.static('public'));
 
 app.get('/', function (req, res) {
-  res.send('This is the remix');
+  res.send('Hello World!');
 });
 
 app.get('/pizza/:topping/:qty', function (req, res) {
@@ -21,27 +22,36 @@ app.get('/pizza/:topping/:qty', function (req, res) {
   res.render('templates/pizza', obj);
 });
 
-app.get('/hello', function (req, res) {
-  res.send('Hello World!');
+app.get(/hello/, function (req, res) {
+  res.send('Hello!');
 });
 
-app.get('/awesometown', function (req, res) {
+app.get('/awesomethings', function (req, res) {
   setTimeout(function () {
     var awesomeThings = [
       'Pizza',
       'Bacon',
-      '2nd Amendment',
+      '2nd Ammendment',
       'Pluto',
       'Space Jam'
     ];
 
     res.render('templates/world',
-      { title: 'PartyTime.com',
-        welcome: 'Thanks for stopping by',
+      { title: 'Awesomesite.com',
+        welcome: 'Thanks for coming!',
         awesomeThings: awesomeThings
       }
     );
   }, 5000);
+});
+
+app.get('/test', function (req, res, next) {
+  res.write('Test1!');
+  next();
+});
+
+app.get('/test', function (req, res) {
+  res.end('Test2!');
 });
 
 app.get('/json', function (req, res) {
@@ -52,30 +62,19 @@ app.get('/thisshoulderror', function (req, res) {
   res.send(badVariable);
 });
 
-app.get('/test', function (req, res, next) {
-  res.write('Test1');
-  next();
-});
-
-app.get('/test', function (req, res) {
-  res.write('Test2');
-  next();
-});
-
 app.use(function (req, res) {
-  // 400s before 500s
   res.status(403).send('Unauthorized!');
 });
 
 app.use(function (err, req, res, next) {
   // pass 4 arguments to create an error handling middleware
-  console.log('ERRRoRoRR!', err.stack);
-  res.status(500).send('My B, brah');
+  console.log('ERRRRRRRRRR', err.stack);
+  res.status(500).send('My Bad');
 });
 
 var server = app.listen(3000, function () {
   var host = server.address().address;
   var port = server.address().port;
 
-  console.log('Example app listening at http://%s:%s', host, port);
+  console.log('Example app listening at http://%s:%d', host, port);
 });
