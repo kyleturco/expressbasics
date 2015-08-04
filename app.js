@@ -3,8 +3,9 @@ var app = express();
 // var app = require express execute
 var routes = require('./routes/index');
 var pizza = require('./routes/pizza');
-var lessCSS = require('less-middleware')
-
+var lessCSS = require('less-middleware');
+var morgan = require('morgan');
+var fs = require('fs');
 
 
 app.set('view engine', 'ejs');
@@ -19,6 +20,9 @@ app.use(function(req, res, next){
   next();
 })
 //handles a console log for requests at any url
+
+var logStream = fs.createWriteStream('access.log', {flags: 'a'});
+app.use(morgan('dev', {stream: logStream}));
 
 app.use(express.static('public'))
 //called a middleware
