@@ -6,6 +6,7 @@ var morgan = require('morgan');
 
 var routes = require('./routes/index');
 var pizza = require('./routes/pizza');
+var nuggets = require('./routes/chickennuggets')
 
 var app = express();
 
@@ -35,8 +36,11 @@ app.use(function (req, res, next) {
 
 app.use(express.static('public'));
 
+
+// List of Routes
 app.use('/', routes);
 app.use('/pizza', pizza);
+app.use('/chickennuggets', pizza);
 
 app.use(function (req, res) {
   res.status(403).send('Unauthorized!');
