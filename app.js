@@ -46,7 +46,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use('/', routes);
 app.use('/pizza', pizza);
 app.use('/chickennuggets', nuggets);
-app.use('/imgur', imgur);
+app.use('/imgurUpload', imgur);
 
 app.use(function (req, res) {
   res.status(403).send('Unauthorized!');
