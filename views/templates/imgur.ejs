@@ -1,3 +1,14 @@
-<h1>Welcome to imgur</h1>
+<!doctype html>
+<html>
+<head>
+  <title><%= title %> | Imgur</title>
+</head>
+  <body>
+    <h1>Welcome to imgur</h1>
 
-<form action="/imgur/upload" method="POST" enctype="multipart/form-data">
+    <form action="/imgur/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="file" accept="image/*">
+      <input type="submit" value="Upload">
+    </form>
+  </body>
+</html>
