@@ -6,9 +6,12 @@ var morgan = require('morgan');
 
 var routes = require('./routes/index');
 var pizza = require('./routes/pizza');
-var nuggets = require('./routes/chickennuggets')
+var nuggets = require('./routes/chickennuggets');
+var bodyParser = require('body-parser');
 
 var app = express();
+
+require('./lib/secrets');
 
 app.set('view engine', 'ejs');
 app.set('case sensitive routing', true);
@@ -36,7 +39,7 @@ app.use(function (req, res, next) {
 
 app.use(express.static('public'));
 
-app.use(bodyParser.urlencoded({extended: false});
+app.use(bodyParser.urlencoded({extended: true}));
 
 // List of Routes
 app.use('/', routes);
