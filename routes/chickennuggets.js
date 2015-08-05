@@ -6,7 +6,8 @@ router.get('/', function (req, res) {
 });
 
 router.post('/order', function (req, res) {
-
+  console.log(req.body);
+  res.redirect('/');
 });
 
 module.exports = router;

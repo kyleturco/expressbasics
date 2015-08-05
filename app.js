@@ -36,11 +36,12 @@ app.use(function (req, res, next) {
 
 app.use(express.static('public'));
 
+app.use(bodyParser.urlencoded({extended: false});
 
 // List of Routes
 app.use('/', routes);
 app.use('/pizza', pizza);
-app.use('/chickennuggets', pizza);
+app.use('/chickennuggets', nuggets);
 
 app.use(function (req, res) {
   res.status(403).send('Unauthorized!');
