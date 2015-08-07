@@ -8,11 +8,12 @@ var routes = require('./routes/index');
 var pizza = require('./routes/pizza');
 var nuggets = require('./routes/chickennuggets');
 var bodyParser = require('body-parser');
-var imgur = require('./routes/imgur');
+var imgur = require('./routes/imgurUpload');
 
 var app = express();
 
 require('./lib/secrets');
+require('./lib/mongodb');
 
 app.set('view engine', 'ejs');
 app.set('case sensitive routing', true);

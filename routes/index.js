@@ -1,8 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-
-
 router.get('/', function (req, res) {
   res.send('Hello World!');
 });
@@ -12,24 +10,17 @@ router.get('/hello', function (req, res) {
 });
 
 router.get('/awesometown', function (req, res) {
-    setTimeout(function(){
-        var awesomeThings = [
-      'Pizza',
-      'Bacon',
-      '2nd Amendment',
-      'Pluto',
-      'Space Jam'
-    ];
+    var collection = global.db.collection('awesomeThings');
+
+    collection.find().toArray(function(err, things) {
       res.render('templates/world',
-        { title: 'Welcome to AwesomeTown',
-          welcome: "Ready to get awesome?",
-          awesomeThings: awesomeThings}
-          );
-    //res.render looks in the views folder by default
-    //the second argument in the render function allows you to pass arguments into the HTML
-    console.log('I waited!')
-  }, 2000)
-});
+        {
+          welcome: 'Thanks for coming!',
+          awesomeThings: things
+        }
+      );
+    });
+  });
 
 router.get('/error', function (req, res) {
   res.send(badVariable);
