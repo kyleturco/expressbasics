@@ -21,6 +21,11 @@
           <td><%= order.flavor %></td>
           <td><%= order.qty %></td>
           <td><%= order.createdAt %></td>
+          <td>
+            <form action="/chickennuggets/order/<%= order._id %>/complete" method="post">
+              <input type="submit" value="Complete">
+            </form>
+          </td>
         </tr>
       <%  }); %>
     </tbody>
