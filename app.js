@@ -3,16 +3,19 @@ var fs = require('fs');
 var express = require('express');
 var lessCSS = require('less-middleware');
 var morgan = require('morgan');
+var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var pizza = require('./routes/pizza');
-var nuggets = require('./routes/chickennuggets');
-var bodyParser = require('body-parser');
-var imgur = require('./routes/imgurUpload');
+var chickennuggets = require('./routes/chickennuggets');
+var imgur = require('./routes/imgur');
 
 var app = express();
 
-require('./lib/secrets');
+if (process.env.NODE_ENV !== 'production') {
+  require('./lib/secrets');
+}
+
 require('./lib/mongodb');
 
 app.set('view engine', 'ejs');
@@ -20,6 +23,7 @@ app.set('case sensitive routing', true);
 
 app.locals.title = 'aweso.me';
 
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(lessCSS('public'));
 
 var logStream = fs.createWriteStream('access.log', {flags: 'a'});
@@ -41,13 +45,10 @@ app.use(function (req, res, next) {
 
 app.use(express.static('public'));
 
-app.use(bodyParser.urlencoded({extended: true}));
-
-// List of Routes
 app.use('/', routes);
 app.use('/pizza', pizza);
-app.use('/chickennuggets', nuggets);
-app.use('/imgurUpload', imgur);
+app.use('/chickennuggets', chickennuggets);
+app.use('/imgur', imgur);
 
 app.use(function (req, res) {
   res.status(403).send('Unauthorized!');
@@ -70,9 +71,10 @@ app.use(function (err, req, res, next) {
   res.status(500).send('My Bad');
 });
 
-var server = app.listen(3000, function () {
+var port = process.env.PORT || 3000;
+
+var server = app.listen(port, function () {
   var host = server.address().address;
   var port = server.address().port;
-
   console.log('Example app listening at http://%s:%d', host, port);
 });
